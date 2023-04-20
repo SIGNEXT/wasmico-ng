@@ -1,0 +1,15 @@
+{
+  "name": "wasmico",
+  "version": "1.0.0",
+  "bin": {
+    "wasmico-cli": "./cli/index.js",
+    "wasmico-tui": "./tui/index.js"
+  },
+  "workspaces": [
+    "core",
+    "cli",
+    "tui"
+  ],
+  "author": "",
+  "license": "ISC"
+}

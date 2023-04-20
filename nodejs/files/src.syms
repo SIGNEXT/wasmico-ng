@@ -1,0 +1,15 @@
+millis
+micros
+delay
+pinMode
+digitalWrite
+getPinLED
+print
+printInt
+printDouble
+pauseTask
+resumeTask
+getThreadNo
+getFreeHeapSize
+getInitialFreeHeapSize
+saveTaskState

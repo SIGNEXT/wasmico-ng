@@ -1,0 +1,16 @@
+{
+  "name": "wasmico-cli",
+  "version": "1.0.0",
+  "description": "Wasmico command-line interface",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xavier-Pisco",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^17.7.1",
+    "wasmico-core": "../core"
+  }
+}
