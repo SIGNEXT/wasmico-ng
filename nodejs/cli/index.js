@@ -20,7 +20,7 @@ const callFunctionAndPrint = (f, args) => {
 
 yargs(process.argv.slice(2))
     .command(
-        'upload <deviceIP> <filename> <reservedStackSize> <reservedInitialMemory> <memoryLimit> [liveUpdate]',
+        'upload <deviceIP> <filepath> <reservedStackSize> <reservedInitialMemory> <memoryLimit> [liveUpdate]',
         'Upload a task',
         (yargs) => {
             yargs.positional('liveUpdate', { type: 'boolean', default: false })
@@ -31,7 +31,7 @@ yargs(process.argv.slice(2))
         callFunctionAndPrint(wasmico.deleteTask, argv)
     )
     .command(
-        'edit <deviceIP> <filename> <reservedStackSize> <reservedInitialMemory> <memoryLimit> [liveUpdate]',
+        'edit <deviceIP> <filepath> <reservedStackSize> <reservedInitialMemory> <memoryLimit> [liveUpdate]',
         'Upload a task',
         (yargs) => {
             yargs.positional('liveUpdate', { type: 'boolean', default: false })
@@ -62,7 +62,7 @@ yargs(process.argv.slice(2))
         {},
         async (argv) => {
             if (argv.stateFile) {
-                const path = __dirname + '/../states/' + argv.stateFile
+                const path = argv.stateFile
                 await wasmico
                     .getTaskState(argv)
                     .then((response) => {
@@ -81,7 +81,7 @@ yargs(process.argv.slice(2))
         'Upload state ',
         {},
         (argv) => {
-            const path = __dirname + '/../states/' + argv.stateFile
+            const path = argv.stateFile
             argv.state = readFileSync(path)
             callFunctionAndPrint(wasmico.uploadTaskState, argv)
         }

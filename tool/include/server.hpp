@@ -26,7 +26,7 @@ void handleTaskStop();
 
 void handleTaskPause();
 
-void handleTaskUnpause();
+void handleTaskResume();
 
 void handleListActiveTasks();
 

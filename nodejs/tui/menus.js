@@ -60,7 +60,7 @@ async function showMenu() {
             await prompts.scanNetworkPrompt()
             break
         case 'Upload file':
-            await prompts.uploadFilePrompt()
+            await prompts.uploadTaskPrompt()
             break
         case 'Start task':
             await prompts.startTaskPrompt()

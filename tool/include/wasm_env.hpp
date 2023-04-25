@@ -36,7 +36,7 @@ void liveUpdateTask(String filename);
 
 bool pauseTask(String filename);
 
-bool unpauseTask(String filename);
+bool resumeTask(String filename);
 
 TaskState getTaskState(String filename);
 

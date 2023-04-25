@@ -124,13 +124,13 @@ async function scanNetworkPrompt() {
     updateDevices()
 }
 
-async function uploadFilePrompt() {
+async function uploadTaskPrompt() {
     let answers = await inquirer.prompt([
         checkboxOnDevicesAndGroups(devices),
         {
             type: 'input',
-            name: 'filename',
-            message: 'File name',
+            name: 'filepath',
+            message: 'File path',
         },
         {
             type: 'number',
@@ -165,7 +165,7 @@ async function uploadFilePrompt() {
                     deviceIP: devices.find(
                         (device) => device.name === deviceName
                     ).ip,
-                    filename: answers.filename,
+                    filepath: answers.filepath,
                     reservedStackSize: answers.reservedStackSize,
                     reservedInitialMemory: answers.reservedInitialMemory,
                     memoryLimit: answers.memoryLimit,
@@ -365,7 +365,7 @@ async function saveTaskStatePrompt() {
             filename: answers.filename,
         })
         .then((response) => {
-            const path = __dirname + '/../states/' + answers.stateFilename
+            const path = answers.stateFilename
             writeFileSync(path, JSON.stringify(response))
         })
         .catch((response) => {
@@ -390,7 +390,7 @@ async function uploadTaskStatePrompt() {
 
     await Promise.all(
         getChosenDevices(devices, answers.names).map(async (deviceName) => {
-            const path = __dirname + '/../states/' + answers.stateFilename
+            const path = answers.stateFilename
             const state = readFileSync(path)
             await wasmico
                 .uploadTaskState({
@@ -504,7 +504,7 @@ export default {
     addDevicePrompt,
     removeDevicePrompt,
     scanNetworkPrompt,
-    uploadFilePrompt,
+    uploadTaskPrompt,
     startTaskPrompt,
     stopTaskPrompt,
     pauseTaskPrompt,

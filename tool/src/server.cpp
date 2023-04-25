@@ -355,7 +355,7 @@ void handleTaskPause() {
     }
 }
 
-void handleTaskUnpause() {
+void handleTaskResume() {
     if (!server.hasArg("filename")) {
         server.send(
             400,
@@ -381,12 +381,12 @@ void handleTaskUnpause() {
         );
         return;
     }
-    if (unpauseTask(filename)) {
-        Serial.printf("Task %s was unpaused\n", server.arg("filename").c_str());
+    if (resumeTask(filename)) {
+        Serial.printf("Task %s was resumed\n", server.arg("filename").c_str());
         server.send(
             200,
             "application/json",
-            createSuccessMessage("task unpaused successfully")
+            createSuccessMessage("task resumed successfully")
         );
     } else {
         server.send(400, "application/json", createErrorMessage("Task was not paused"));
@@ -499,7 +499,7 @@ void configServerRoutes() {
     server.on("/task/start", HTTP_POST, handleTaskStart);
     server.on("/task/stop", HTTP_POST, handleTaskStop);
     server.on("/task/pause", HTTP_POST, handleTaskPause);
-    server.on("/task/unpause", HTTP_POST, handleTaskUnpause);
+    server.on("/task/resume", HTTP_POST, handleTaskResume);
     server.on("/task/active", HTTP_GET, handleListActiveTasks);
     server.on("/task/details", HTTP_GET, handleListTaskDetails);
     server.on("/task/state", HTTP_GET, handleTaskState);

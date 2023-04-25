@@ -28,15 +28,14 @@ const checkDeviceIP = (deviceIP) => {
 
 const uploadTask = async ({
     deviceIP,
-    filename,
+    filepath,
     reservedStackSize,
     reservedInitialMemory,
     memoryLimit,
     liveUpdate,
 }) => {
-    checkFilename(filename)
+    checkFilename(filepath)
     checkDeviceIP(deviceIP)
-    const filepath = __dirname + `/../files/${filename}`
     if (!existsSync(filepath)) {
         throw {
             status_code: 1,
@@ -47,7 +46,7 @@ const uploadTask = async ({
         wasmfile: {
             value: createReadStream(filepath),
             options: {
-                filename: filename,
+                filename: filepath.split('/').pop().split('\\').pop(), // Get filename on Windows and on Linux
                 contentType: null,
             },
         },
@@ -122,7 +121,7 @@ const resumeTask = async ({ deviceIP, filename }) => {
     checkDeviceIP(deviceIP)
 
     return utils.sendRequestToDevice({
-        url: `http://${deviceIP}/task/unpause`,
+        url: `http://${deviceIP}/task/resume`,
         method: 'POST',
         args: {
             filename: filename,

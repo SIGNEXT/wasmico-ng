@@ -316,7 +316,7 @@ void removeWasmTask(String filename) {
     Serial.println("...");
 
     taskRuntimes.erase(filename);
-    removeTaskState(filename);
+    // removeTaskState(filename);
     // taskStates.erase(filename);
 
     if (taskHandles.count(filename)) {
@@ -349,7 +349,7 @@ bool pauseTask(String filename) {
     return false;
 }
 
-bool unpauseTask(String filename) {
+bool resumeTask(String filename) {
     if (taskHandles.count(filename) && eTaskGetState(taskHandles[filename]) == eSuspended) {
         vTaskResume(taskHandles[filename]);
         return true;
