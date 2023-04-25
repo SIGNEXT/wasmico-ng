@@ -120,7 +120,20 @@ async function scanNetworkPrompt() {
         },
     ])
 
-    wasmico.scanNetwork(answers.network)
+    const foundDevices = await wasmico.scanNetwork(answers.network)
+    foundDevices
+        .filter((deviceIP) => !devices.find((device) => device.ip === deviceIP))
+        .forEach((deviceIP) => {
+            devices.push({
+                name: deviceIP,
+                ip: deviceIP,
+                group: 'default',
+                status: true,
+                permanent: false,
+                runningTasks: [],
+                freeSpace: 0,
+            })
+        })
     updateDevices()
 }
 

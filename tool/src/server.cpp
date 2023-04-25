@@ -126,23 +126,8 @@ void handleUploadSuccess() {
         }
 
         numFiles++;
-
-        // TODO: just for checking the file contents; remove after
         String filename = file.name();
         file.close();
-        File xeg = SPIFFS.open(filename, "r");
-        if (!xeg) {
-            Serial.println("Failed to open WASM file for reading");
-            return;
-        }
-        size_t app_wasm_len = xeg.size();
-        uint8_t app_wasm[app_wasm_len];
-        xeg.read(app_wasm, app_wasm_len);
-        xeg.close();
-        char buf[sizeof(app_wasm) * 2 + 1]; /* one extra for \0 */
-        if (to_hex(buf, sizeof(buf), app_wasm, sizeof(app_wasm)))
-            Serial.println(buf);
-        // ends here
 
         bool liveUpdate = false;
         unsigned int reservedStackSize = 0, reservedInitialMemory = 0, memoryLimit = 0;
@@ -154,7 +139,7 @@ void handleUploadSuccess() {
         server.send(
             200,
             "application/json",
-            createSuccessMessage("file uploaded successfully")
+            createSuccessMessage("file " + filename.substring(filename.lastIndexOf('/') + 1) + " uploaded successfully")
         );
         return;
     }
@@ -492,6 +477,10 @@ void handleRestart() {
     ESP.restart();
 }
 
+void handlePing() {
+    server.send(200, "application/json", createSuccessMessage("Wasmico is on!"));
+}
+
 void configServerRoutes() {
     server.on("/task/upload", HTTP_POST, handleUploadSuccess, handleWasmFileUpload);
     server.on("/task/delete", HTTP_POST, handleWasmTaskDelete);
@@ -506,6 +495,7 @@ void configServerRoutes() {
     server.on("/task/state", HTTP_POST, handleSetTaskState);
     server.on("/heap", HTTP_GET, handleGetHeapSize);
     server.on("/restart", HTTP_POST, handleRestart);
+    server.on("/wasmico", HTTP_GET, handlePing);
 
     // TODO: for debug/testing purposes; delete after
     server.on("/filesystem", HTTP_POST, handleFilesystem);

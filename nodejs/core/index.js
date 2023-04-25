@@ -229,7 +229,7 @@ const scanNetwork = async (network) => {
     const evilscan = new Evilscan(evilScanOptions)
 
     evilscan.on('result', async (data) => {
-        await getActiveTaskDetails({ deviceIP: data.ip })
+        await pingDevice({ deviceIP: data.ip })
             .then((response) => {
                 if (response.status_code === 0) {
                     foundDevices.push(data.ip)
@@ -241,11 +241,21 @@ const scanNetwork = async (network) => {
     evilscan.on('done', () => {
         done = true
     })
+
     evilscan.run()
     while (!done) {
         await utils.sleep(1000)
     }
     return foundDevices
+}
+
+const pingDevice = ({ deviceIP }) => {
+    checkDeviceIP(deviceIP)
+
+    return utils.sendRequestToDevice({
+        url: `http://${deviceIP}/wasmico`,
+        method: 'GET',
+    })
 }
 
 export default {
@@ -263,4 +273,5 @@ export default {
     getFreeHeapSize,
     restartDevice,
     scanNetwork,
+    pingDevice,
 }

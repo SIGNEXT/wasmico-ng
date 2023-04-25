@@ -8,8 +8,8 @@ import menus from './menus.js'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
-const __filename = fileURLToPath(import.meta.url);
-global.__dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+global.__dirname = path.dirname(__filename)
 
 global.network = '0.0.0.0/0'
 global.devices = []
@@ -29,24 +29,38 @@ export const updateDevices = async () => {
     await Promise.all(
         devices.map(async (device, idx) => {
             await wasmico
-                .getActiveTaskDetails({
+                .pingDevice({
                     deviceIP: device.ip,
                 })
-                .then(async (response) => {
-                    devices[idx].status = true
-                    devices[idx].runningTasks = response.tasks.map((task) =>
-                        task.filename.substr(task.filename.lastIndexOf('/') + 1)
-                    )
+                .then(async () => {
                     await wasmico
-                        .getFreeHeapSize({
+                        .getActiveTaskDetails({
                             deviceIP: device.ip,
                         })
-                        .then((response) => {
-                            devices[idx].freeSpace = response.free_heap_size
+                        .then(async (response) => {
+                            devices[idx].status = true
+                            devices[idx].runningTasks = response.tasks.map(
+                                (task) =>
+                                    task.filename.substr(
+                                        task.filename.lastIndexOf('/') + 1
+                                    )
+                            )
                         })
                         .catch(() => {
-                            // TODO: Find why errors are being thrown quite frequently
-                            // devices[idx].status = falses
+                            // If there's an error keep old data
+                        })
+                        .finally(async () => {
+                            await wasmico
+                                .getFreeHeapSize({
+                                    deviceIP: device.ip,
+                                })
+                                .then((response) => {
+                                    devices[idx].freeSpace =
+                                        response.free_heap_size
+                                })
+                                .catch(() => {
+                                    // If there's an error keep old data
+                                })
                         })
                 })
                 .catch(() => {
@@ -62,20 +76,6 @@ get_active_interface(async (err, obj) => {
     }
     const block = new Netmask(obj.ip_address, obj.netmask)
     network = block.base + '/' + block.bitmask
-    const foundDevices = await wasmico.scanNetwork(network)
-    foundDevices
-        .filter((deviceIP) => !devices.find((device) => device.ip === deviceIP))
-        .forEach((deviceIP) => {
-            devices.push({
-                name: deviceIP,
-                ip: deviceIP,
-                group: 'default',
-                status: true,
-                permanent: false,
-                runningTasks: [],
-                freeSpace: 0,
-            })
-        })
 })
 await updateDevices()
 setInterval(updateDevices, 5000)
@@ -86,7 +86,7 @@ while (true) {
         await menus.showMenu()
         await utils.sleep(1000)
     } catch (error) {
-        if (error !== "EVENT_INTERRUPTED") {
+        if (error !== 'EVENT_INTERRUPTED') {
             console.log(error)
         }
         console.log('\n')
