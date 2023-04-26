@@ -106,3 +106,5 @@ dist
 .vscode/
 .idea/
 benchmarking/
+states/
+files/
