@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 import utils from './utils.js'
-import wasmico from 'wasmico-core'
+import wasmico from '@wasmico/core'
 import { get_active_interface } from 'network'
 import { Netmask } from 'netmask'
 import menus from './menus.js'

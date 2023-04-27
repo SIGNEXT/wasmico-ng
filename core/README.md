@@ -1,4 +1,4 @@
-# Wasmico-core
+# @wasmico/core
 
 This package contains the core code needed to send commands to the ESP32 devices running Wasmico.
 
@@ -10,7 +10,7 @@ On your nodejs project install the wasmico package using the following command:
 
 `npm i wasmico`
 
-After that, import the wasmico-core package into your program:
+After that, import the @wasmico/core package into your program:
 
 `import wasmico from 'wasmico/core'`
 

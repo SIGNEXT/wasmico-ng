@@ -108,3 +108,4 @@ dist
 benchmarking/
 states/
 files/
+*.tgz

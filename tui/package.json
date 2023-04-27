@@ -1,5 +1,5 @@
 {
-  "name": "wasmico-tui",
+  "name": "@wasmico/tui",
   "version": "1.0.0",
   "description": "Wasmico terminal user interface",
   "main": "index.js",
@@ -16,7 +16,6 @@
     "inquirer-interrupted-prompt": "^3.0.0",
     "netmask": "^2.0.2",
     "network": "^0.6.1",
-    "request": "^2.88.2",
-    "wasmico-core": "../core"
+    "@wasmico/core": "^1.0.0"
   }
 }

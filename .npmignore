@@ -1,0 +1,10 @@
+.vscode/
+.idea/
+benchmarking/
+states/
+files/
+*.tgz
+
+
+tool/
+tui/devices
