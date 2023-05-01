@@ -1,6 +1,6 @@
 {
   "name": "@wasmico/cli",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Wasmico command-line interface",
   "main": "index.js",
   "type": "module",
@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "yargs": "^17.7.1",
-    "@wasmico/core": "^1.0.0"
+    "@wasmico/core": "^0.1.0"
   }
 }
