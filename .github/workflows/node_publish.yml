@@ -13,6 +13,10 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      # Publish all workspaces and ignore if they fail (probably because they are already published)
+      - run: npm publish -w @wasmico/core || true
+      - run: npm publish -w @wasmico/tui || true
+      - run: npm publish -w @wasmico/cli || true
       - run: npm publish -ws --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
