@@ -1,6 +1,6 @@
 {
   "name": "@wasmico/tui",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Wasmico terminal user interface",
   "main": "index.js",
   "type": "module",
