@@ -1,6 +1,6 @@
 {
   "name": "wasmico",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "bin": {
     "@wasmico/cli": "./cli/index.js",
     "@wasmico/tui": "./tui/index.js"
@@ -11,9 +11,9 @@
     "tui"
   ],
   "dependencies": {
-    "@wasmico/core" : "file:./core",
-    "@wasmico/cli" : "file:./cli",
-    "@wasmico/tui" : "file:./tui"
+    "@wasmico/core" : "file:core",
+    "@wasmico/cli" : "file:cli",
+    "@wasmico/tui" : "file:tui"
   },
   "author": "",
   "license": "ISC"
