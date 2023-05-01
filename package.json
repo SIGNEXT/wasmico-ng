@@ -1,20 +1,23 @@
 {
   "name": "wasmico",
   "version": "0.1.2",
+  "description": "Wasmico tool for ESP32",
+  "main": "core/index.js",
+  "type": "module",
   "bin": {
-    "@wasmico/cli": "./cli/index.js",
-    "@wasmico/tui": "./tui/index.js"
+    "wasmico-cli": "./cli/index.js",
+    "wasmico-tui": "./tui/index.js"
   },
-  "workspaces": [
-    "core",
-    "cli",
-    "tui"
-  ],
   "dependencies": {
-    "@wasmico/core" : "file:core",
-    "@wasmico/cli" : "file:cli",
-    "@wasmico/tui" : "file:tui"
+    "axios": "^1.3.4",
+    "yargs": "^17.7.1",
+    "cli-table3": "^0.6.3",
+    "inquirer": "^9.1.5",
+    "inquirer-interrupted-prompt": "^3.0.0",
+    "netmask": "^2.0.2",
+    "network": "^0.6.1",
+    "evilscan": "^1.9.1"
   },
-  "author": "",
+  "author": "Xavier-Pisco",
   "license": "ISC"
 }

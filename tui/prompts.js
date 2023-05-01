@@ -1,4 +1,4 @@
-import wasmico from '@wasmico/core'
+import wasmico from '../core/index.js'
 import inquirer from 'inquirer'
 import { readFileSync, writeFileSync } from 'fs'
 import utils from './utils.js'

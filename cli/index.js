@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import wasmico from '@wasmico/core'
+import wasmico from '../core/index.js'
 import yargs from 'yargs'
 import { readFileSync, writeFileSync } from 'fs'
 import { fileURLToPath } from 'url'
