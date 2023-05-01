@@ -1,6 +1,6 @@
 {
   "name": "wasmico",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "@wasmico/cli": "./cli/index.js",
     "@wasmico/tui": "./tui/index.js"
