@@ -194,6 +194,35 @@ async function uploadTaskPrompt() {
     )
 }
 
+async function removeTaskPrompt() {
+    let answers = await inquirer.prompt([
+        checkboxOnDevicesAndGroups(devices),
+        {
+            type: 'input',
+            name: 'filename',
+            message: 'File name',
+        },
+    ])
+
+    await Promise.all(
+        getChosenDevices(devices, answers.names).map(async (deviceName) => {
+            await wasmico
+                .deleteTask({
+                    deviceIP: devices.find(
+                        (device) => device.name === deviceName
+                    ).ip,
+                    filename: answers.filename,
+                })
+                .then((response) => {
+                    console.log(deviceName + ': ' + response.message)
+                })
+                .catch((response) => {
+                    console.log(deviceName + ': ' + response.message)
+                })
+        })
+    )
+}
+
 async function startTaskPrompt() {
     let answers = await inquirer.prompt([
         checkboxOnDevicesAndGroups(devices),
@@ -518,6 +547,7 @@ export default {
     removeDevicePrompt,
     scanNetworkPrompt,
     uploadTaskPrompt,
+    removeTaskPrompt,
     startTaskPrompt,
     stopTaskPrompt,
     pauseTaskPrompt,

@@ -37,6 +37,7 @@ async function showMenu() {
             'Remove a device',
             'Scan network',
             'Upload file',
+            'Remove file',
             'Start task',
             'Stop task',
             'Pause task',
@@ -61,6 +62,9 @@ async function showMenu() {
             break
         case 'Upload file':
             await prompts.uploadTaskPrompt()
+            break
+        case 'Remove file':
+            await prompts.removeTaskPrompt()
             break
         case 'Start task':
             await prompts.startTaskPrompt()
