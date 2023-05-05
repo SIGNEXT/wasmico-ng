@@ -1,4 +1,4 @@
-# @wasmico/core
+# Wasmico core
 
 This package contains the core code needed to send commands to the ESP32 devices running Wasmico.
 
@@ -10,13 +10,13 @@ On your nodejs project install the wasmico package using the following command:
 
 `npm i wasmico`
 
-After that, import the @wasmico/core package into your program:
+After that, import the `wasmico` package into your program:
 
-`import wasmico from 'wasmico/core'`
+`import wasmico from 'wasmico'`
 
 or
 
-`const wasmico = require('wasmico/core')`
+`const wasmico = require('wasmico')`
 
 ## Available commands
 
@@ -70,7 +70,7 @@ or
 - `getActiveTaskDetails` - Get information about the currently running tasks. Retrieves the filename, status (running or paused) and stack high water mark (maximum amount of memory used) for every started task.
     - `deviceIP` - IP of the ESP32 device
 ---
-- `getFreeHeapSize` - Get the free heap size, the largest free block size on the ESP32. When starting a task, the `reservedStackSize` of that task should alway be lower than the largest free block size
+- `getFreeHeapSize` - Get the free heap size, the largest free block size on the ESP32. When starting a task, the `reservedStackSize` of that task should always be lower than the largest free block size
     - `deviceIP` - IP of the ESP32 device
 ---
 - `restartDevice` - Restarts an ESP32 device
