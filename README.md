@@ -18,16 +18,16 @@ The essential code to use your device as a central server to control your Wasmic
 
 This module is made to be easily incorporated into your code and allows you to easily send commands to ESP32 devices.
 
-Please read the available [Core README](./core/README.md) for further information.
+All the available commands and how to use them can be found in the [Core README](./core/README.md).
 
 ### Wasmico cli
 
 The `wasmico-cli` is an executable that allows you to execute commands on the ESP32 via the command line.
 
-All the available commands and how to use them can be found in the [CLI README](./cli/README.md)
+Please read the [CLI README](./cli/README.md) for further information.
 
 ### Wasmico tui
 
 The `wasmico-tui` is also an executable that gives you the option to keep track of the available ESP32 devices while sending commands.
 
-This tool is described in the [TUI README](./tui/README.md)
+This tool is described in the [TUI README](./tui/README.md).

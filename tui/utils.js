@@ -29,10 +29,10 @@ const readDevicesToMap = () => {
 }
 
 const writeDevicesToFile = (map) => {
-    writeFileSync(DEVICES_FILENAME, '') // clear file
+    writeFileSync(__dirname + DEVICES_FILENAME, '') // clear file
     for (const [deviceName, { deviceIP, groupName }] of map) {
         appendFileSync(
-            DEVICES_FILENAME,
+            __dirname + DEVICES_FILENAME,
             `${deviceName} ${deviceIP} ${groupName}\n`
         )
     }
