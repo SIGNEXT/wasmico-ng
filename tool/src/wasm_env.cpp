@@ -1,6 +1,10 @@
 #include <ArduinoJson.h>
 #include <m3_env.h>
 #include "SPIFFS.h"
+// Needed for random values and float to str
+#include <time.h>
+#include <stdlib.h>
+//
 
 #include "task.hpp"
 #include "wasm_env.hpp"
@@ -148,6 +152,18 @@ bool to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) 
     return true;
 }
 
+m3ApiRawFunction(m3_arduino_setupRand) {
+    srand(time(NULL));
+
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_arduino_randInt) {
+    m3ApiReturnType(int32_t);
+    
+    m3ApiReturn(rand());
+}
+
 ////////////////////////
 // WASM interpreter
 ////////////////////////
@@ -167,6 +183,8 @@ M3Result bindWasmFunctions(IM3Runtime runtime) {
     m3_LinkRawFunction(module, module_name, "saveTaskState", "v(*i*)", &m3_arduino_saveTaskState);
     m3_LinkRawFunction(module, module_name, "resumeTask", "i(**)", &m3_arduino_resumeTask);
 
+    m3_LinkRawFunction(module, module_name, "setupRand", "v()", &m3_arduino_setupRand);
+    m3_LinkRawFunction(module, module_name, "randInt", "i()", &m3_arduino_randInt);
     // Serial.println("Linked Arduino functions");
     return m3Err_none;
 }

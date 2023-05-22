@@ -108,6 +108,16 @@ async function removeDevicePrompt() {
     answers.names.forEach((deviceName) => {
         devices = devices.filter((device) => device.name !== deviceName)
     })
+    const devicesMap = new Map()
+    devices
+        .filter((device) => device.permanent)
+        .forEach((device) => {
+            devicesMap.set(device.name, {
+                deviceIP: device.ip,
+                groupName: device.group,
+            })
+        })
+    utils.writeDevicesToFile(devicesMap)
 }
 
 async function scanNetworkPrompt() {

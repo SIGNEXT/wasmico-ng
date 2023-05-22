@@ -1,1 +1,3 @@
-main1 192.168.10.31 main
+sensor1 192.168.10.29 main
+sensor3 192.168.10.31 extra
+sensor2 192.168.10.30 main
