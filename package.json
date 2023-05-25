@@ -1,6 +1,6 @@
 {
   "name": "wasmico",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Wasmico tool for ESP32",
   "main": "core/index.js",
   "type": "module",
