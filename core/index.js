@@ -176,7 +176,7 @@ const uploadTaskState = async ({ deviceIP, filename, state }) => {
     checkDeviceIP(deviceIP)
 
     state = JSON.parse(state)
-    if (!state.data || !state.len) {
+    if (state.data == null || state.data == undefined || state.len == null || state.len == undefined) {
         console.log("State file doesn't have correct format.")
     }
     return utils.sendRequestToDevice({
