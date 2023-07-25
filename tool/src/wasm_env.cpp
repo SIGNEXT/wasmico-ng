@@ -25,7 +25,6 @@ std::map<String, StaticTask_t> taskBuffers;
 
 std::map<String, TaskState> taskStates;
 
-
 void createEnvironment() {
     // create WASM3 environment for the interpreter
     env = m3_NewEnvironment();
@@ -124,19 +123,19 @@ m3ApiRawFunction(m3_arduino_saveTaskState) {
     m3ApiSuccess();
 }
 
-m3ApiRawFunction(m3_arduino_resumeTask) {
+m3ApiRawFunction(m3_arduino_getTaskState) {
     m3ApiReturnType(uint32_t);
     m3ApiGetArgMem(uint8_t*, state);
     m3ApiGetArgMem(const char*, filename);
 
-    uint32_t hadState = 0;
+    uint32_t stateLen = 0;
     if (taskStates.count(filename)) {
         TaskState taskState = taskStates[filename];
         memmove(state, taskState.state, taskState.len);
-        hadState = taskState.len;
+        stateLen = taskState.len;
     }
 
-    m3ApiReturn(hadState);
+    m3ApiReturn(stateLen);
 }
 
 bool to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) {
@@ -160,7 +159,7 @@ m3ApiRawFunction(m3_arduino_setupRand) {
 
 m3ApiRawFunction(m3_arduino_randInt) {
     m3ApiReturnType(int32_t);
-    
+
     m3ApiReturn(rand());
 }
 
@@ -181,7 +180,7 @@ M3Result bindWasmFunctions(IM3Runtime runtime) {
 
     m3_LinkRawFunction(module, module_name, "pauseTask", "v(*i*)", &m3_arduino_pauseTask);
     m3_LinkRawFunction(module, module_name, "saveTaskState", "v(*i*)", &m3_arduino_saveTaskState);
-    m3_LinkRawFunction(module, module_name, "resumeTask", "i(**)", &m3_arduino_resumeTask);
+    m3_LinkRawFunction(module, module_name, "getTaskState", "i(**)", &m3_arduino_getTaskState);
 
     m3_LinkRawFunction(module, module_name, "setupRand", "v()", &m3_arduino_setupRand);
     m3_LinkRawFunction(module, module_name, "randInt", "i()", &m3_arduino_randInt);
@@ -379,12 +378,18 @@ TaskState getTaskState(String filename) {
     removeTaskState(filename);
     // taskStates.erase(filename);
     callWasmFunction(taskRuntimes[filename], "_state");
+    while (taskStates.count(filename) == 0) {
+        delay(100);
+    }
     return taskStates[filename];
 }
 
 void saveTaskState(String filename, uint8_t* state, size_t len) {
     TaskState taskState;
-    taskState.state = state;
+    taskState.state = (uint8_t*)malloc(sizeof(uint8_t) * len);
+    for (int i = 0; i < len; i++) {
+        taskState.state[i] = state[i];
+    }
     taskState.len = len;
 
     taskStates[filename] = taskState;
@@ -395,6 +400,7 @@ void removeTaskState(String filename) {
         return;
     }
     TaskState taskState = taskStates[filename];
+    free(taskState.state);
     taskStates.erase(filename);
 }
 

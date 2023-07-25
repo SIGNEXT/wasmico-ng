@@ -418,7 +418,7 @@ void handleSetTaskState() {
     uint8_t* state = bytesFromString(server.arg("state"));
     size_t len = server.arg("len").toInt();
     saveTaskState(filename, state, len);
-    Serial.println("Saved state: " + server.arg("state"));
+    Serial.println("Saved state");
     server.send(
         200,
         "application/json",
